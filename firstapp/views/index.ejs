@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+
+  <%for(var result of ['get' , 'post' , 'put' , 'delete']){%>
+  <button onclick="sendRequest('<%=result%>')"><%=result%></button>
+  <%}%>
+  
+  <span id="clock">00:00:00</span>
+  
+  <script>
+    function sendRequest(methode = 'get') {
+      const xhr = new XMLHttpRequest();
+      xhr.addEventListener('readyStateChange', function () {
+        if (this.readyState === 4) {
+          const response = JSON.parse(this.responseText);
+          console.log(response);
+        }
+      })
+      xhr.open(methode, "/users");
+      xhr.setRequestHeader("Content-Type", "applicatoin/json");
+      xhr.send();
+    }
+  </script>
+</body>
+
+</html>
